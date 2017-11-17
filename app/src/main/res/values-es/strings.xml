@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StockViewer</string>
+    <string name="price">Precio: </string>
+    <string name="no_stocks">No se agregaron acciones. Haga clic en el ícono Buscar para agregar una nueva acción.</string>
+</resources>
