@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,7 +21,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends Activity implements PortfolioFragment.OnStockClickListener {
@@ -32,6 +36,7 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        startService();
 
         try {
             FileInputStream fis = this.openFileInput("savedStocks");
@@ -56,9 +61,43 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
 
     }
 
-    public void displayStock(Stock s) {
-        StockDetailsFragment stockDetails = StockDetailsFragment.newInstance(s);
+    public void displayStock(int position) {
+        StockDetailsFragment stockDetails = StockDetailsFragment.newInstance(stockArray.get(position));
         loadFragment(twoPane ? R.id.fragment2 : R.id.fragment1, stockDetails, !twoPane);
+    }
+
+    private void startService() {
+
+        final Handler handler = new Handler();
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            UpdateService service = new UpdateService();
+                            setCurrentStockList(service.getUpdate(getCurrentStockList()));
+                            if(stockArray.size() > 0) {
+                                Toast toast = Toast.makeText(MainActivity.this, "Stock prices updated", Toast.LENGTH_SHORT);
+                                toast.show();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(task, 0, 60*1000);  // interval of one minute
+
+    }
+
+    public ArrayList<Stock> getCurrentStockList() {
+        return this.stockArray;
+    }
+    public void setCurrentStockList(ArrayList<Stock> stocks) {
+        this.stockArray = stocks;
     }
 
     @Override
@@ -110,7 +149,6 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
 
         return super.onCreateOptionsMenu(menu);
     }
-
 
     private void loadFragment(int id, Fragment fragment, boolean addToBackStack){
         FragmentManager fm = getFragmentManager();

@@ -63,8 +63,7 @@ public class PortfolioFragment extends Fragment {
         gvStockNames.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Stock pickedStock = stocks.get(position);
-                mListener.displayStock(pickedStock);
+                mListener.displayStock(position);
             }
         });
         return v;
@@ -88,6 +87,6 @@ public class PortfolioFragment extends Fragment {
     }
 
     public interface OnStockClickListener {
-        void displayStock(Stock stock);
+        void displayStock(int position);
     }
 }
