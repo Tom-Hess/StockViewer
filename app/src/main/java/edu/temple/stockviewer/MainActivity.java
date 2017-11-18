@@ -106,34 +106,46 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                String data;
-                String name;
-                String symbol;
-                Double lastPrice;
-                String imageURL;
-                Double change;
-                try {
-                    data = new StockDataTask().execute(query).get();
-                    JSONObject stockInfo = new JSONObject(data);
-                    name = stockInfo.getString("Name");
-                    symbol = stockInfo.getString("Symbol");
-                    lastPrice = stockInfo.getDouble("LastPrice");
-                    change = stockInfo.getDouble("Change");
-                    imageURL = "https://finance.google.com/finance/getchart?q=" + symbol + "&p=5d";
-                    if(!symbol.equals("")) {
-                        Stock stock = new Stock(name, symbol, lastPrice, imageURL, change);
-                        stockArray.add(stock);
-                        portfolioFragment = PortfolioFragment.newInstance(stockArray);
-                        loadFragment(R.id.fragment1, portfolioFragment, false);
-                        Toast toast = Toast.makeText(MainActivity.this, "Added " + name, Toast.LENGTH_SHORT);
+                boolean isDuplicate = false;
+                for(Stock s : stockArray) {
+                    if(s.getSymbol().equalsIgnoreCase(query)) {
+                        Toast toast = Toast.makeText(MainActivity.this, R.string.stock_already_added, Toast.LENGTH_SHORT);
                         toast.show();
+                        isDuplicate = true;
                     }
-
-                } catch (Exception e) {
-                    Toast toast = Toast.makeText(MainActivity.this, R.string.invalid_stock_symbol, Toast.LENGTH_SHORT);
-                    toast.show();
-                    e.printStackTrace();
                 }
+
+                if(!isDuplicate) {
+                    String data;
+                    String name;
+                    String symbol;
+                    Double lastPrice;
+                    String imageURL;
+                    Double change;
+                    try {
+                        data = new StockDataTask().execute(query).get();
+                        JSONObject stockInfo = new JSONObject(data);
+                        name = stockInfo.getString("Name");
+                        symbol = stockInfo.getString("Symbol");
+                        lastPrice = stockInfo.getDouble("LastPrice");
+                        change = stockInfo.getDouble("Change");
+                        imageURL = "https://finance.google.com/finance/getchart?q=" + symbol + "&p=5d";
+                        if(!symbol.equals("")) {
+                            Stock stock = new Stock(name, symbol, lastPrice, imageURL, change);
+                            stockArray.add(stock);
+                            portfolioFragment = PortfolioFragment.newInstance(stockArray);
+                            loadFragment(R.id.fragment1, portfolioFragment, false);
+                            Toast toast = Toast.makeText(MainActivity.this, "Added " + name, Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+
+                    } catch (Exception e) {
+                        Toast toast = Toast.makeText(MainActivity.this, R.string.invalid_stock_symbol, Toast.LENGTH_SHORT);
+                        toast.show();
+                        e.printStackTrace();
+                    }
+                }
+
 
                 return false;
             }

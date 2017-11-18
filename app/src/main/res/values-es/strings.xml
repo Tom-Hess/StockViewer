@@ -3,6 +3,7 @@
     <string name="app_name">StockViewer</string>
     <string name="price">Precio: </string>
     <string name="invalid_stock_symbol">¡Símbolo de stock inválido!</string>
+    <string name="stock_already_added">¡Ese inventario ya está agregado!</string>
     <string name="stock_prices_updated">Precios de acciones actualizados</string>
     <string name="no_stocks">No se agregaron acciones. Haga clic en el ícono Buscar para agregar una nueva acción.</string>
 </resources>

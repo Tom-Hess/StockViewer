@@ -2,6 +2,7 @@
     <string name="app_name">StockViewer</string>
     <string name="price">Price: </string>
     <string name="invalid_stock_symbol">Invalid stock symbol!</string>
+    <string name="stock_already_added">That stock is already added!</string>
     <string name="stock_prices_updated">Stock prices updated</string>
     <string name="no_stocks">No stocks added. Click the Search icon and enter the stock\'s symbol to add a new stock.</string>
 </resources>
