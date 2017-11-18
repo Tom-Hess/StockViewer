@@ -53,7 +53,6 @@ public class StockDataTask extends AsyncTask<String, Void, String> {
         return null;
     }
     protected void onPostExecute(String response) {
-        Log.i("async task", "the response = " + sb.toString());
     }
 
 }

@@ -110,10 +110,10 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                String data = "";
-                String name ="";
-                String symbol = "";
-                Double lastPrice = 0.0;
+                String data;
+                String name;
+                String symbol;
+                Double lastPrice;
                 String imageURL;
                 try {
                     data = new StockDataTask().execute(query).get();
@@ -160,6 +160,20 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
         ft.commit();
     }
 
+    @Override
+    protected void onStop() {
+        try {
+            FileOutputStream fos = this.openFileOutput("savedStocks", Context.MODE_PRIVATE);
+            ObjectOutputStream os = new ObjectOutputStream(fos);
+            os.writeObject(stockArray);
+            os.close();
+            fos.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        super.onStop();
+    }
     @Override
     protected void onDestroy() {
         try {

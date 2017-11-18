@@ -13,20 +13,18 @@
             android:id="@+id/stockImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@+id/companyName"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="226dp"
             android:src="@android:color/background_light" />
 
         <TextView
             android:id="@+id/companyName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@+id/lblPrice"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="148dp"
             android:text="Company Name"
-            android:textSize="30sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/lblPrice"
@@ -34,20 +32,22 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/stockPrice"
             android:layout_alignBottom="@+id/stockPrice"
-            android:layout_marginEnd="14dp"
+            android:layout_marginEnd="17dp"
             android:layout_toStartOf="@+id/stockPrice"
             android:text="@string/price"
-            android:textSize="30sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/stockPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/companyName"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="62dp"
+            android:layout_marginBottom="23dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
             android:text="Stock Price"
-            android:textSize="30sp" />
+            android:textSize="18sp" />
 
     </RelativeLayout>
 
