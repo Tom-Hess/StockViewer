@@ -128,7 +128,7 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
                     }
 
                 } catch (Exception e) {
-                    Toast toast = Toast.makeText(MainActivity.this, "Invalid stock symbol!", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(MainActivity.this, R.string.invalid_stock_symbol, Toast.LENGTH_SHORT);
                     toast.show();
                     e.printStackTrace();
                 }
