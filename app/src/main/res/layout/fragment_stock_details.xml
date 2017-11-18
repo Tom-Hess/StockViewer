@@ -25,6 +25,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="148dp"
+            android:textColor="@color/colorPrimary"
             android:text="Company Name"
             android:textSize="30sp" />
 
@@ -37,6 +38,7 @@
             android:layout_marginEnd="14dp"
             android:layout_toStartOf="@+id/stockPrice"
             android:text="@string/price"
+            android:textColor="@color/colorAccent"
             android:textSize="30sp" />
 
         <TextView
@@ -47,6 +49,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="62dp"
             android:text="Stock Price"
+            android:textColor="@android:color/holo_green_light"
             android:textSize="30sp" />
 
     </RelativeLayout>

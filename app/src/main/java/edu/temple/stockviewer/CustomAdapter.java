@@ -33,10 +33,19 @@ public class CustomAdapter extends ArrayAdapter {
 
         TextView txtStockName = (TextView) items.findViewById(R.id.textView);
         txtStockName.setText(stocks.get(position).getSymbol().toString());
-        txtStockName.getLayoutParams().width = 2000;
-        txtStockName.getLayoutParams().height= 200;
-        txtStockName.setGravity(Gravity.CENTER);
-        txtStockName.setTextSize(30);
+        TextView txtStockPrice = (TextView) items.findViewById(R.id.txtPrice);
+        txtStockPrice.setText("$" + stocks.get(position).getStockPrice().toString());
+        TextView txtChange = (TextView) items.findViewById(R.id.txtChange);
+
+        txtChange.setText(String.format("%.2f", stocks.get(position).getChange()));
+
+        if(stocks.get(position).getChange() < 0 ){
+            txtChange.setTextColor(Color.RED);
+        }else {
+            txtChange.setTextColor(Color.GREEN);
+            txtChange.setText("+" + txtChange.getText());
+        }
+
         return items;
     }
 

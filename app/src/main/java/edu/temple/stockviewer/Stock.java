@@ -13,20 +13,14 @@ public class Stock implements Serializable {
     private String symbol;
     private String imageURL;
     private Double stockPrice;
-    public Stock(String name, String symbol, String imageURL) {
-        this.name = name;
-        this.symbol = symbol;
-        this.imageURL = imageURL;
-    }
-    public Stock(String name) {
-        this.name = name;
-    }
+    private Double change;
 
-    public Stock(String name, String symbol, Double stockPrice, String imageURL) {
+    public Stock(String name, String symbol, Double stockPrice, String imageURL, Double change) {
         this.name = name;
         this.symbol = symbol;
         this.stockPrice = stockPrice;
         this.imageURL = imageURL;
+        this.change = change;
     }
 
     public String getName() {
@@ -58,5 +52,14 @@ public class Stock implements Serializable {
     public void setStockPrice(Double sp) {
         this.stockPrice = sp;
     }
+
+    public Double getChange() {
+        return this.change;
+    }
+
+    public void setChange(Double change) {
+        this.change = change;
+    }
+
 
 }

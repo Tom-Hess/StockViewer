@@ -74,10 +74,10 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
                         try {
                             UpdateService service = new UpdateService();
                             setCurrentStockList(service.getUpdate(getCurrentStockList()));
-                            if(stockArray.size() > 0) {
-                                Toast toast = Toast.makeText(MainActivity.this, "Stock prices updated", Toast.LENGTH_SHORT);
-                                toast.show();
-                            }
+//                            if(stockArray.size() > 0) {
+//                                Toast toast = Toast.makeText(MainActivity.this, "Stock prices updated", Toast.LENGTH_SHORT);
+//                                toast.show();
+//                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -111,15 +111,17 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
                 String symbol;
                 Double lastPrice;
                 String imageURL;
+                Double change;
                 try {
                     data = new StockDataTask().execute(query).get();
                     JSONObject stockInfo = new JSONObject(data);
                     name = stockInfo.getString("Name");
                     symbol = stockInfo.getString("Symbol");
                     lastPrice = stockInfo.getDouble("LastPrice");
+                    change = stockInfo.getDouble("Change");
                     imageURL = "https://finance.google.com/finance/getchart?q=" + symbol + "&p=5d";
                     if(!symbol.equals("")) {
-                        Stock stock = new Stock(name, symbol, lastPrice, imageURL);
+                        Stock stock = new Stock(name, symbol, lastPrice, imageURL, change);
                         stockArray.add(stock);
                         portfolioFragment = PortfolioFragment.newInstance(stockArray);
                         loadFragment(R.id.fragment1, portfolioFragment, false);

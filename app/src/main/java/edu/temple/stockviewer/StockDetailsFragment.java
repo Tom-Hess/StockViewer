@@ -1,6 +1,7 @@
 package edu.temple.stockviewer;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -48,6 +49,7 @@ public class StockDetailsFragment extends Fragment {
         stockImage = v.findViewById(R.id.stockImage);
         companyName.setText(stock.getName());
         stockPrice.setText("$" + stock.getStockPrice().toString());
+        stockPrice.setTextColor(Color.GREEN);
         Picasso.with(getActivity()).load(stock.getImageURL()).into(stockImage);
         return v;
     }

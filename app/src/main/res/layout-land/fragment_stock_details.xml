@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/lblPrice"
             android:layout_centerHorizontal="true"
+            android:textColor="@color/colorPrimary"
             android:text="Company Name"
             android:textSize="18sp" />
 
