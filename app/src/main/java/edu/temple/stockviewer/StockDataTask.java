@@ -10,8 +10,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.net.ssl.HttpsURLConnection;
-
 /**
  * Created by Tom on 11/16/2017.
  */

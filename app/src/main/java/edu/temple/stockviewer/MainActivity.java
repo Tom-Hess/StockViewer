@@ -55,10 +55,6 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
         portfolioFragment = PortfolioFragment.newInstance(stockArray);
         loadFragment(R.id.fragment1, portfolioFragment, false);
 
-        if(twoPane) {
-            loadFragment(R.id.fragment2, StockDetailsFragment.newInstance(stockArray.get(0)), false);
-        }
-
     }
 
     public void displayStock(int position) {
