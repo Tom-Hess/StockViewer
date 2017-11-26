@@ -41,9 +41,11 @@ public class CustomAdapter extends ArrayAdapter {
 
         if(stocks.get(position).getChange() < 0 ){
             txtChange.setTextColor(Color.RED);
-        }else {
+        }else if(stocks.get(position).getChange() > 0){
             txtChange.setTextColor(Color.GREEN);
             txtChange.setText("+" + txtChange.getText());
+        }else {
+            txtChange.setTextColor(Color.YELLOW);
         }
 
         return items;
