@@ -8,6 +8,7 @@ import java.io.Serializable;
  * Created by Tom on 11/16/2017.
  */
 
+// A stock object with name, symbol, imageURL, stockPrice, and last change in price
 public class Stock implements Serializable {
     private String name;
     private String symbol;
@@ -38,9 +39,11 @@ public class Stock implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
     public void setSymbol(String symbol) {
         this.symbol = symbol;
     }
+
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }

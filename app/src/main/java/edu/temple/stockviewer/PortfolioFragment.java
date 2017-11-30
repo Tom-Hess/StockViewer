@@ -21,6 +21,7 @@ public class PortfolioFragment extends Fragment {
     TextView msgNoStocks;
     private OnStockClickListener mListener;
     CustomAdapter adapter;
+
     public PortfolioFragment() {
         // Required empty public constructor
     }
@@ -50,7 +51,8 @@ public class PortfolioFragment extends Fragment {
         msgNoStocks = v.findViewById(R.id.msgNoStocks);
         Bundle args = getArguments();
         stocks = (ArrayList<Stock>) args.getSerializable("stocks");
-        if(stocks.size() > 0)
+        //If there are stocks in the array, do not display the empty portfolio message
+        if (stocks.size() > 0)
             msgNoStocks.setVisibility(View.INVISIBLE);
         this.adapter = new CustomAdapter(getActivity(), R.layout.activity_background,
                 R.id.textView, stocks);
@@ -82,6 +84,8 @@ public class PortfolioFragment extends Fragment {
         mListener = null;
     }
 
+
+    //Interface used to communicate with the MainActivity
     public interface OnStockClickListener {
         void displayStock(int position);
     }

@@ -19,6 +19,7 @@ public class StockDetailsFragment extends Fragment {
     TextView companyName;
     TextView stockPrice;
     ImageView stockImage;
+
     public StockDetailsFragment() {
         // Required empty public constructor
     }
@@ -26,6 +27,7 @@ public class StockDetailsFragment extends Fragment {
     public static StockDetailsFragment newInstance(Stock stock) {
         StockDetailsFragment fragment = new StockDetailsFragment();
         Bundle args = new Bundle();
+        //Save the clicked stock information to the fragment's arguments
         args.putSerializable("stock", stock);
         fragment.setArguments(args);
         return fragment;
@@ -35,6 +37,7 @@ public class StockDetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            //Retrieve the clicked on stock's information from the arguments
             stock = (Stock) getArguments().getSerializable("stock");
         }
     }

@@ -17,6 +17,7 @@ import java.net.URL;
 public class StockDataTask extends AsyncTask<String, Void, String> {
 
     StringBuilder sb;
+
     protected String doInBackground(String... params) {
         HttpURLConnection con = null;
         try {
@@ -50,6 +51,7 @@ public class StockDataTask extends AsyncTask<String, Void, String> {
         }
         return null;
     }
+
     protected void onPostExecute(String response) {
     }
 

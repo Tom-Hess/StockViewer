@@ -16,6 +16,8 @@ import java.util.List;
  * Created by Tom on 11/16/2017.
  */
 
+
+//Custom adapter to set the stock information for the PortfolioFragment Gridview
 public class CustomAdapter extends ArrayAdapter {
     LayoutInflater inflater;
     ArrayList<Stock> stocks;
@@ -39,12 +41,12 @@ public class CustomAdapter extends ArrayAdapter {
 
         txtChange.setText(String.format("%.2f", stocks.get(position).getChange()));
 
-        if(stocks.get(position).getChange() < 0 ){
+        if (stocks.get(position).getChange() < 0) {
             txtChange.setTextColor(Color.RED);
-        }else if(stocks.get(position).getChange() > 0){
+        } else if (stocks.get(position).getChange() > 0) {
             txtChange.setTextColor(Color.GREEN);
             txtChange.setText("+" + txtChange.getText());
-        }else {
+        } else {
             txtChange.setTextColor(Color.YELLOW);
         }
 

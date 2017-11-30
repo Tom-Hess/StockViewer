@@ -33,6 +33,7 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
     ArrayList<Stock> stockArray;
     Fragment portfolioFragment;
     StockDetailsFragment stockDetails;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,11 +44,14 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
 
         twoPane = (findViewById(R.id.fragment2) != null);
 
+        //load the portfolio fragment with the stocks from the saved file (if applicable)
         portfolioFragment = PortfolioFragment.newInstance(stockArray);
         loadFragment(R.id.fragment1, portfolioFragment, false);
 
     }
 
+
+    // Retrieves the list of stocks from the saved file
     public ArrayList<Stock> getStocksFromFile() {
         try {
             FileInputStream fis = this.openFileInput("savedStocks");
@@ -56,16 +60,20 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
             is.close();
             fis.close();
             return stockArray;
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             return new ArrayList<Stock>();
         }
     }
 
+
+    //Display the StockDetailsFragment when a user clicks on the stock in the gridview
     public void displayStock(int position) {
         stockDetails = StockDetailsFragment.newInstance(getStocksFromFile().get(position));
         loadFragment(twoPane ? R.id.fragment2 : R.id.fragment1, stockDetails, !twoPane);
     }
 
+
+    //Starts the service to update stocks every 60 seconds
     private void startService() {
         final Handler handler = new Handler();
         Timer timer = new Timer();
@@ -89,7 +97,8 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
                 });
             }
         };
-        timer.schedule(task, 0, 15*1000);  // interval of one minute
+        //Time the update to execute every 60 seconds
+        timer.schedule(task, 0, 60 * 1000);  // interval of one minute
     }
 
     @Override
@@ -97,22 +106,23 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
         MenuItem item = menu.findItem(R.id.menuSearch);
-        SearchView searchView = (SearchView)item.getActionView();
+        SearchView searchView = (SearchView) item.getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 boolean isDuplicate = false;
                 stockArray = getStocksFromFile();
-                for(Stock s : stockArray) {
-                    if(s.getSymbol().equalsIgnoreCase(query)) {
+                for (Stock s : stockArray) {
+                    //Check for duplicate stock symbol
+                    if (s.getSymbol().equalsIgnoreCase(query)) {
                         Toast toast = Toast.makeText(MainActivity.this, R.string.stock_already_added, Toast.LENGTH_SHORT);
                         toast.show();
                         isDuplicate = true;
                     }
                 }
 
-                if(!isDuplicate) {
+                if (!isDuplicate) {
                     String data;
                     String name;
                     String symbol;
@@ -120,6 +130,7 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
                     String imageURL;
                     Double change;
                     try {
+                        //Retrieve the JSON stock data and add the stock to the ArrayList
                         data = new StockDataTask().execute(query).get();
                         JSONObject stockInfo = new JSONObject(data);
                         name = stockInfo.getString("Name");
@@ -127,7 +138,8 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
                         lastPrice = stockInfo.getDouble("LastPrice");
                         change = stockInfo.getDouble("Change");
                         imageURL = "https://finance.google.com/finance/getchart?q=" + symbol + "&p=5d";
-                        if(!symbol.equals("")) {
+                        if (!symbol.equals("")) {
+                            //If the symbol does not come back empty, add the stock to the user's portfolio
                             Stock stock = new Stock(name, symbol, lastPrice, imageURL, change);
                             stockArray.add(stock);
                             saveToFile();
@@ -156,11 +168,12 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void loadFragment(int id, Fragment fragment, boolean addToBackStack){
+    //Loads a new fragment to the UI
+    private void loadFragment(int id, Fragment fragment, boolean addToBackStack) {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft;
         ft = fm.beginTransaction().replace(id, fragment);
-        if(addToBackStack) {
+        if (addToBackStack) {
             ft.addToBackStack(null);
         }
         ft.commit();
@@ -171,6 +184,7 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
         saveToFile();
         super.onStop();
     }
+
     @Override
     protected void onDestroy() {
         saveToFile();
@@ -178,9 +192,10 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
         super.onDestroy();
     }
 
+    //Saves the user's portfolio of stocks to a file
     public void saveToFile() {
         try {
-            FileOutputStream fos = this.openFileOutput("savedStocks", Context.MODE_PRIVATE);
+            FileOutputStream fos = this.openFileOutput("SavedStocks", Context.MODE_PRIVATE);
             ObjectOutputStream os = new ObjectOutputStream(fos);
             os.writeObject(stockArray);
             os.close();

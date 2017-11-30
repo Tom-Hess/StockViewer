@@ -19,7 +19,6 @@ import java.util.TimerTask;
 public class UpdateService extends IntentService {
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
-     *
      */
     public UpdateService() {
         super("UpdateService");
@@ -30,14 +29,16 @@ public class UpdateService extends IntentService {
         //getQuote(intent.getStringExtra("stock_symbol"));
     }
 
+    // Retrieves and returns an updated list of stocks
     public ArrayList<Stock> getUpdate(ArrayList<Stock> stocks) {
         ArrayList<Stock> updatedStocks = new ArrayList<Stock>();
-        for(int i = 0; i < stocks.size(); i++) {
+        for (int i = 0; i < stocks.size(); i++) {
             Stock s = stocks.get(i);
             String symbol = s.getSymbol();
             String data;
             Double lastPrice;
             try {
+                //Retrieves new JSON data and updates the stock's information
                 data = new StockDataTask().execute(symbol).get();
                 JSONObject stockInfo = new JSONObject(data);
                 lastPrice = stockInfo.getDouble("LastPrice");
@@ -50,9 +51,6 @@ public class UpdateService extends IntentService {
         }
         return updatedStocks;
     }
-
-
-
 
 
 }
