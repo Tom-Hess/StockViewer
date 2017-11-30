@@ -41,10 +41,6 @@ public class PortfolioFragment extends Fragment {
         }
     }
 
-    public void addStock(Stock stock) {
-        stocks.add(stock);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

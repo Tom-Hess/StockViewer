@@ -44,6 +44,7 @@ public class UpdateService extends IntentService {
                 s.setStockPrice(lastPrice);
                 updatedStocks.add(s);
             } catch (Exception e) {
+                updatedStocks.add(s);
                 e.printStackTrace();
             }
         }
