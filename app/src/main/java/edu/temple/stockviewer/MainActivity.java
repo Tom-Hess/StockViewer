@@ -54,7 +54,7 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
     // Retrieves the list of stocks from the saved file
     public ArrayList<Stock> getStocksFromFile() {
         try {
-            FileInputStream fis = this.openFileInput("savedStocks");
+            FileInputStream fis = this.openFileInput("StockViewerPortfolio");
             ObjectInputStream is = new ObjectInputStream(fis);
             ArrayList<Stock> stockArray = (ArrayList<Stock>) is.readObject();
             is.close();
@@ -192,10 +192,10 @@ public class MainActivity extends Activity implements PortfolioFragment.OnStockC
         super.onDestroy();
     }
 
-    //Saves the user's portfolio of stocks to a file
+    //Saves the user's portfolio of stocks to a file on their device
     public void saveToFile() {
         try {
-            FileOutputStream fos = this.openFileOutput("SavedStocks", Context.MODE_PRIVATE);
+            FileOutputStream fos = this.openFileOutput("StockViewerPortfolio", Context.MODE_PRIVATE);
             ObjectOutputStream os = new ObjectOutputStream(fos);
             os.writeObject(stockArray);
             os.close();
